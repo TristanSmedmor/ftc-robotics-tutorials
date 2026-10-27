@@ -1,0 +1,631 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation and guides for FTC programming and engineering.">
+      
+      
+        <meta name="author" content="Robotics Team">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>FTC Team Tutorial Hub</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="FTC Team Tutorial Hub" class="md-header__button md-logo" aria-label="FTC Team Tutorial Hub" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FTC Team Tutorial Hub
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="FTC Team Tutorial Hub" class="md-nav__button md-logo" aria-label="FTC Team Tutorial Hub" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FTC Team Tutorial Hub
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Home</h1>
+
+<p>FTC OnBotJava Mecanum Wheel Programming Guide </p>
+<p>Step 1: Physical Wheel Mounting &amp; Roller Configuration
+Follow these exact physical checks before writing any software code. Mecanum wheels feature 45-degree rollers that push sideways when turned.</p>
+<p>Look at the Robot from Above (Top View): The top rollers of all four wheels contacting the carpet MUST form an "X" shape across your robot chassis.
+Top-Left Wheel: Rollers point diagonally toward the top-right.
+Top-Right Wheel: Rollers point diagonally toward the top-left.
+Bottom-Left Wheel: Rollers point diagonally toward the top-left.
+Bottom-Right Wheel: Rollers point diagonally toward the top-right.
+Step 2: Driver Station Hardware Configuration
+Map the hardware ports on your REV Control Hub using the Driver Station Android app.
+Connect the device that u are using to the wifi network with the SSID (Network Name): where the password is #Password1
+Open the Driver Station App &gt; Tap Settings (three dots) &gt; Select Configure Robot.
+Create a new configuration or edit your active configuration.
+Select your Control Hub / Expansion Hub &gt; Select Motors.
+Enter the exact case-sensitive string names into the software configuration as listed below:
+Physical Wheel Location
+Config Motor Name
+Control Hub Motor Port
+Software Direction Setup</p>
+<p>Front Left
+frontLeft
+Port 0
+REVERSE
+Back Left
+backLeft
+Port 1
+REVERSE
+Front Right
+frontRight
+Port 2
+FORWARD
+Back Right
+backRight
+Port 3
+FORWARD</p>
+<p>Step 3: Understanding Mecanum Math &amp; Power Normalization
+Mecanum movement calculates each motor's power by adding and subtracting three joystick inputs: Y (forward/backward), X (strafing left/right), and RX (turning yaw).
+1. Kinematic Equations Breakdown
+Front Left Power = Y + X + RX — Adding X pushes FL forward during right strafe.
+Back Left Power = Y - X + RX — Subtracting X drives BL backward during right strafe.
+Front Right Power = Y - X - RX — Subtracting X drives FR backward during right strafe.
+Back Right Power = Y + X - RX — Adding X drives BR forward during right strafe.
+2. Why Power Normalization is Critical
+If a driver pushes full forward (Y = 1.0), full strafe (X = 1.0), and full turn (RX = 1.0), the raw front left calculation becomes 1.0 + 1.0 + 1.0 = 3.0. Since motor power caps at 1.0, unclipped values distort the drive angle. Normalization scales all 4 motor powers down proportionally so the maximum output magnitude is exactly 1.0.
+Step 4: Robot-Centric TeleOp &amp; Line-by-Line Code Explanation
+Open http://192.168.43.1:8080 in your web browser, click OnBotJava, create a new file and name it a suitable name and paste the following complete code:
+package org.firstinspires.ftc.teamcode;</p>
+<p>import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;</p>
+<p>@TeleOp(name = "Mecanum Robot-Centric", group = "Linear OpMode")
+public class MecanumTeleOpRobotCentric extends LinearOpMode {</p>
+<div class="highlight"><pre><span></span><code>@Override
+public void runOpMode() throws InterruptedException {
+    // Line A1: Fetch hardware motor objects from Driver Station configuration
+    DcMotor frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeft");
+    DcMotor backLeftMotor = hardwareMap.get(DcMotor.class, "backLeft");
+    DcMotor frontRightMotor = hardwareMap.get(DcMotor.class, "frontRight");
+    DcMotor backRightMotor = hardwareMap.get(DcMotor.class, "backRight");
+
+    // Line A2: Reverse left side motors so positive power moves the robot forward
+    frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+    backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+    // Line A3: Set active braking behavior when power drops to zero
+    frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+    // Line A4: Send initialization status to Driver Station screen
+    telemetry.addData("Status", "Initialized. Press Play.");
+    telemetry.update();
+
+    // Line A5: Pause execution until driver presses Play button on Driver Station
+    waitForStart();
+
+    // Line A6: Main driver control loop (executes repeatedly during TeleOp)
+    while (opModeIsActive()) {
+        // Line A7: Read joystick inputs and apply corrections
+        double y = -gamepad1.left_stick_y; // Invert Y stick because pushing UP returns negative values
+        double x = gamepad1.left_stick_x * 1.1; // Multiplier compensates for sideways roller scrub friction
+        double rx = gamepad1.right_stick_x; // Yaw rotational turning control
+
+        // Line A8: Compute raw power values for each wheel using Mecanum kinematics
+        double frontLeftPower = y + x + rx;
+        double backLeftPower = y - x + rx;
+        double frontRightPower = y - x - rx;
+        double backRightPower = y + x - rx;
+
+        // Line A9: Find maximum absolute power value among all 4 wheels
+        double maxPower = Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower));
+        maxPower = Math.max(maxPower, Math.abs(frontRightPower));
+        maxPower = Math.max(maxPower, Math.abs(backRightPower));
+
+        // Line A10: Scale down powers proportionally if any single wheel exceeds 1.0
+        if (maxPower &gt; 1.0) {
+            frontLeftPower /= maxPower;
+            backLeftPower /= maxPower;
+            frontRightPower /= maxPower;
+            backRightPower /= maxPower;
+        }
+
+        // Line A11: Send physical motor power commands to hardware controllers
+        frontLeftMotor.setPower(frontLeftPower);
+        backLeftMotor.setPower(backLeftPower);
+        frontRightMotor.setPower(frontRightPower);
+        backRightMotor.setPower(backRightPower);
+
+        // Line A12: Display live diagnostic data on Driver Station screen
+        telemetry.addData("Inputs", "Y: %.2f | X: %.2f | RX: %.2f", y, x, rx);
+        telemetry.addData("Powers", "FL: %.2f | BL: %.2f | FR: %.2f | BR: %.2f", 
+                frontLeftPower, backLeftPower, frontRightPower, backRightPower);
+        telemetry.update();
+    }
+}
+</code></pre></div>
+<p>}
+Line-by-Line Breakdown of What Each Code Block Does:
+Line Reference
+Java Code Statement
+Detailed Action &amp; Purpose</p>
+<p>@TeleOp(...)
+OpMode Registration Annotation
+Tells FTC SDK to list this class under TeleOp modes on the Driver Station drop-down menu.
+Line A1
+hardwareMap.get(DcMotor.class, "...")
+Links the Java variable name to the physical motor port defined in your Driver Station configuration.
+Line A2
+setDirection(DcMotorSimple.Direction.REVERSE)
+Reverses left side motors. Because left motors are mirrored physically, sending positive power without reversing would make the robot spin in place.
+Line A3
+setZeroPowerBehavior(ZeroPowerBehavior.BRAKE)
+Forces motor coils to resist turning when power is zero, stopping coasting instantly when joysticks are released.
+Line A5
+waitForStart()
+Blocks further execution while drivers press INIT. Code waits here until the driver presses the PLAY button.
+Line A7
+double y = -gamepad1.left_stick_y;
+FTC Gamepads return -1.0 when pushed forward and +1.0 when pulled back. Reversing the sign ensures pushing forward drives the robot forward.
+Line A7
+double x = gamepad1.left_stick_x * 1.1;
+Strafing encounters extra friction due to roller scrubbing. Scaling X by 1.1x balances lateral and forward speed response.
+Line A8
+frontLeftPower = y + x + rx;
+Calculates Front Left motor power by summing axial (Y), lateral (X), and rotational (RX) control vectors.
+Line A9-A10
+if (maxPower &gt; 1.0) { power /= maxPower; }
+Divides all 4 wheel power outputs by the highest calculated magnitude if any motor exceeds 1.0, preserving steering ratios.
+Line A11
+frontLeftMotor.setPower(frontLeftPower);
+Applies normalized float values (-1.0 to 1.0) to hardware motor speed controllers.</p>
+<p>Step 5: Field-Centric TeleOp &amp; IMU Integration 
+Field-centric mode uses the REV Control Hub IMU gyro sensor so that pushing UP on the joystick always moves the robot forward regardless of the robot's orientation.
+package org.firstinspires.ftc.teamcode;</p>
+<p>import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.IMU;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;</p>
+<p>@TeleOp(name = "Mecanum Field-Centric", group = "Linear OpMode")
+public class MecanumTeleOpFieldCentric extends LinearOpMode {</p>
+<div class="highlight"><pre><span></span><code>@Override
+public void runOpMode() throws InterruptedException {
+    DcMotor frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeft");
+    DcMotor backLeftMotor = hardwareMap.get(DcMotor.class, "backLeft");
+    DcMotor frontRightMotor = hardwareMap.get(DcMotor.class, "frontRight");
+    DcMotor backRightMotor = hardwareMap.get(DcMotor.class, "backRight");
+
+    frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+    frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+    backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+    // Line B1: Fetch internal REV Control Hub IMU hardware instance
+    IMU imu = hardwareMap.get(IMU.class, "imu");
+
+    // Line B2: Define physical mounting orientation of REV Hub on robot chassis
+    IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+            RevHubOrientationOnRobot.LogoFacingDirection.UP,
+            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+
+    // Line B3: Initialize IMU gyro sensors with specified orientation parameters
+    imu.initialize(parameters);
+
+    waitForStart();
+
+    while (opModeIsActive()) {
+        double y = -gamepad1.left_stick_y;
+        double x = gamepad1.left_stick_x * 1.1;
+        double rx = gamepad1.right_stick_x;
+
+        // Line B4: Reset field zero reference heading when driver presses Options / Start button
+        if (gamepad1.options || gamepad1.start) {
+            imu.resetYaw();
+        }
+
+        // Line B5: Read current robot yaw orientation heading angle in radians
+        double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+
+        // Line B6: Apply 2D inverse rotation transformation matrix to joystick vectors
+        double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
+        double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
+
+        // Line B7: Calculate individual motor powers using field-rotated control vectors
+        double frontLeftPower = rotY + rotX + rx;
+        double backLeftPower = rotY - rotX + rx;
+        double frontRightPower = rotY - rotX - rx;
+        double backRightPower = rotY + rotX - rx;
+
+        // Line B8: Normalize calculated motor powers
+        double maxPower = Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower));
+        maxPower = Math.max(maxPower, Math.abs(frontRightPower));
+        maxPower = Math.max(maxPower, Math.abs(backRightPower));
+
+        if (maxPower &gt; 1.0) {
+            frontLeftPower /= maxPower;
+            backLeftPower /= maxPower;
+            frontRightPower /= maxPower;
+            backRightPower /= maxPower;
+        }
+
+        // Line B9: Apply power commands to physical motors
+        frontLeftMotor.setPower(frontLeftPower);
+        backLeftMotor.setPower(backLeftPower);
+        frontRightMotor.setPower(frontRightPower);
+        backRightMotor.setPower(backRightPower);
+    }
+}
+</code></pre></div>
+<p>}
+Line-by-Line Breakdown of Field-Centric IMU Mathematics:
+Line Reference
+Java Statement / Math Concept
+Detailed Action &amp; Purpose</p>
+<p>Line B1-B3
+RevHubOrientationOnRobot(...)
+Configures pitch/roll/yaw axes relative to Control Hub placement (e.g., Logo pointing UP, USB ports facing FORWARD).
+Line B4
+imu.resetYaw()
+Zeroes out current robot facing direction. Driver presses Options/Start button when facing forward to re-align field coordinate orientation.
+Line B5
+getYaw(AngleUnit.RADIANS)
+Retrieves heading angle in radians required by standard Java trigonometric functions (Math.cos / Math.sin).
+Line B6
+rotX = x<em>cos(-θ) - y</em>sin(-θ)
+rotY = x<em>sin(-θ) + y</em>cos(-θ)
+2D Coordinate Rotation Matrix: Rotates stick vector (X,Y) backwards by negative heading angle (-), translating field reference frame into robot reference frame.</p>
+<p>Step 7: Testing Sequence &amp; Troubleshooting Guide
+Bench Test (Robot on Blocks): Elevate the robot chassis so all 4 wheels spin freely off the ground. Initialize TeleOp and verify individual stick movements:
+Left Stick UP → All 4 wheels spin forward.
+Left Stick RIGHT → FL &amp; BR spin forward; FR &amp; BL spin backward.
+Right Stick RIGHT → Left wheels spin forward; Right wheels spin backward.
+On-Tile Testing &amp; Diagnostics: Place the robot on the ground. If behavior is incorrect, follow the diagnostic troubleshooting steps below:
+Observed Symptom
+Underlying Cause
+Step-by-Step Fix Action</p>
+<p>Robot spins in place when attempting to strafe left/right
+Wheels mounted backwards or motor reversed improperly.
+Verify Step 1 top view forms an "X". Ensure frontLeft and backLeft are set to REVERSE.
+Strafing direction is reversed (moves left when pushing stick right)
+Inverted X vector sign.
+In Line A7, change gamepad1.left_stick_x to -gamepad1.left_stick_x.
+Robot drifts diagonally while trying to drive straight
+Uneven center of mass or roller friction variance.
+Rebalance battery/weight across chassis center or implement IMU heading PID stabilization.
+Robot continues coasting after joystick release
+Motors set to FLOAT mode.
+Verify Line A3 sets setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE) on all 4 motors.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>
