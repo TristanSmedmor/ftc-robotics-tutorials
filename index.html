@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FTC Robotics Tutorial Hub | Mecanum Drive Guide</title>
+  <title>FTC Team Tutorial Hub</title>
   <style>
     :root {
       --bg-color: #0f172a;
@@ -15,6 +15,7 @@
       --border-color: #334155;
       --code-bg: #090d16;
       --table-header: #0284c7;
+      --success: #22c55e;
     }
 
     [data-theme="light"] {
@@ -27,6 +28,7 @@
       --border-color: #e2e8f0;
       --code-bg: #1e293b;
       --table-header: #0284c7;
+      --success: #16a34a;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,31 +37,91 @@
       background-color: var(--bg-color);
       color: var(--text-main);
       line-height: 1.6;
-      display: flex;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Bar */
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 { font-size: 1.5rem; color: var(--accent); }
+    .header-actions { display: flex; gap: 12px; }
+
+    button {
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    button:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--border-color); color: var(--text-main); }
+
+    /* Guide Selection Bar */
+    .guide-selector-bar {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 32px;
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      align-items: center;
+    }
+    .guide-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .guide-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    /* Layout Container */
+    .app-container {
+      display: flex;
+      flex: 1;
     }
 
     /* Sidebar Navigation */
     aside {
-      width: 280px;
+      width: 260px;
       background-color: var(--card-bg);
       border-right: 1px solid var(--border-color);
       padding: 24px 16px;
-      position: fixed;
-      height: 100vh;
+      height: calc(100vh - 120px);
+      position: sticky;
+      top: 120px;
       overflow-y: auto;
     }
-    aside h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: 16px; }
+    aside h2 { font-size: 1rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
     aside ul { list-style: none; }
-    aside li { margin-bottom: 8px; }
+    aside li { margin-bottom: 6px; }
     aside a {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       display: block;
-      padding: 8px 12px;
+      padding: 8px 10px;
       border-radius: 6px;
-      transition: all 0.2s;
     }
     aside a:hover, aside a.active {
       background-color: var(--accent);
@@ -68,31 +130,11 @@
 
     /* Main Content Area */
     main {
-      margin-left: 280px;
       flex: 1;
-      padding: 40px;
-      max-width: 1000px;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 16px;
-      margin-bottom: 32px;
-    }
-    header h1 { font-size: 1.8rem; }
-    .theme-toggle {
-      background: var(--border-color);
-      color: var(--text-main);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
+      padding: 32px 40px;
+      max-width: 900px;
     }
 
-    /* Content Cards & Sections */
     .step-section {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -110,137 +152,180 @@
       border-radius: 12px;
       margin-bottom: 12px;
     }
-    h2 { font-size: 1.4rem; margin-bottom: 12px; }
-    p, li { color: var(--text-muted); font-size: 0.98rem; margin-bottom: 12px; }
-    ul, ol { padding-left: 20px; }
-
-    /* Tables */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 16px 0;
-      font-size: 0.9rem;
-    }
-    th, td {
-      padding: 12px;
-      border: 1px solid var(--border-color);
-      text-align: left;
-    }
-    th { background-color: var(--table-header); color: #fff; }
 
     /* Code Block Containers */
-    .code-container {
-      position: relative;
-      margin: 16px 0;
-    }
+    .code-container { position: relative; margin: 16px 0; }
     pre {
       background: var(--code-bg);
       color: #e2e8f0;
       padding: 16px;
       border-radius: 8px;
       overflow-x: auto;
-      font-family: "Courier New", Courier, monospace;
+      font-family: monospace;
       font-size: 0.88rem;
-      line-height: 1.4;
     }
     .copy-btn {
       position: absolute;
       top: 10px;
       right: 10px;
       background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 4px;
       font-size: 0.75rem;
-      cursor: pointer;
+      padding: 4px 8px;
     }
 
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+    th, td { padding: 10px; border: 1px solid var(--border-color); text-align: left; }
+    th { background-color: var(--table-header); color: #fff; }
+
+    /* Modal Styling */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      width: 90%;
+      max-width: 650px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px;
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.9rem; margin-bottom: 6px; color: var(--text-main); }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-color);
+      color: var(--text-main);
+      font-family: inherit;
+    }
+    .form-group textarea { height: 120px; resize: vertical; }
+
     @media (max-width: 768px) {
-      body { flex-direction: column; }
-      aside { width: 100%; height: auto; position: relative; }
-      main { margin-left: 0; padding: 20px; }
+      .app-container { flex-direction: column; }
+      aside { width: 100%; height: auto; position: relative; top: 0; }
+      main { padding: 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Sidebar Navigation -->
-  <aside>
-    <h2>FTC Team Tutorials</h2>
-    <ul>
-      <li><a href="#step1" class="active">1. Physical Wheel Setup</a></li>
-      <li><a href="#step2">2. Hardware Configuration</a></li>
-      <li><a href="#step3">3. Mecanum Kinematics Math</a></li>
-      <li><a href="#step4">4. Robot-Centric TeleOp</a></li>
-      <li><a href="#step5">5. Field-Centric IMU TeleOp</a></li>
-      <li><a href="#step6">6. Autonomous Encoder Drive</a></li>
-      <li><a href="#step7">7. Testing & Troubleshooting</a></li>
-    </ul>
-  </aside>
+  <!-- Top Header -->
+  <header>
+    <h1>FTC Robotics Tutorials</h1>
+    <div class="header-actions">
+      <button onclick="openUploadModal()">+ Upload New Guide</button>
+      <button class="btn-secondary" onclick="toggleTheme()">Theme</button>
+    </div>
+  </header>
 
-  <!-- Main Content Area -->
-  <main>
-    <header>
-      <h1>Mecanum Wheel OnBotJava Guide</h1>
-      <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light</button>
-    </header>
+  <!-- Guide Selection Bar -->
+  <div class="guide-selector-bar" id="guideSelectorBar">
+    <!-- Dynamic Guide Buttons Rendered Here -->
+  </div>
 
-    <!-- Step 1 -->
-    <section id="step1" class="step-section">
-      <span class="step-badge">STEP 1</span>
-      <h2>Physical Wheel Mounting & Roller Configuration</h2>
-      <p>Verify physical installation before writing code. Mecanum wheels feature 45-degree angled rollers that generate lateral forces when rotated.</p>
-      <ul>
-        <li><strong>Top View ("X" Pattern):</strong> Looking from directly above, the top rollers contacting the carpet MUST form an "X" shape across the chassis.</li>
-        <li><strong>Bottom View ("O" Pattern):</strong> Looking up from under the robot, bottom rollers form an "O". If the top view forms an "O", swap left and right wheels immediately.</li>
+  <!-- Main App Layout -->
+  <div class="app-container">
+    <!-- Sidebar Index for Active Guide -->
+    <aside>
+      <h2>Guide Index</h2>
+      <ul id="guideSidebarIndex">
+        <!-- Dynamic Step Links Rendered Here -->
       </ul>
-    </section>
+    </aside>
 
-    <!-- Step 2 -->
-    <section id="step2" class="step-section">
-      <span class="step-badge">STEP 2</span>
-      <h2>Driver Station Hardware Configuration</h2>
-      <p>Open Driver Station > Settings > Configure Robot. Map motor ports with exact string names:</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Wheel Position</th>
-            <th>OnBotJava Motor Name</th>
-            <th>Control Hub Port</th>
-            <th>Direction Setup</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Front Left</td><td><code>frontLeft</code></td><td>Port 0</td><td><code>REVERSE</code></td></tr>
-          <tr><td>Back Left</td><td><code>backLeft</code></td><td>Port 1</td><td><code>REVERSE</code></td></tr>
-          <tr><td>Front Right</td><td><code>frontRight</code></td><td>Port 2</td><td><code>FORWARD</code></td></tr>
-          <tr><td>Back Right</td><td><code>backRight</code></td><td>Port 3</td><td><code>FORWARD</code></td></tr>
-        </tbody>
-      </table>
-    </section>
+    <!-- Main Tutorial Viewer -->
+    <main id="guideContent">
+      <!-- Active Guide Rendered Here -->
+    </main>
+  </div>
 
-    <!-- Step 3 -->
-    <section id="step3" class="step-section">
-      <span class="step-badge">STEP 3</span>
-      <h2>Kinematics Equations & Power Normalization</h2>
-      <p>Wheel powers combine axial vector (Y), lateral vector (X), and rotational vector (RX):</p>
-      <ul>
-        <li><code>Front Left = Y + X + RX</code></li>
-        <li><code>Back Left = Y - X + RX</code></li>
-        <li><code>Front Right = Y - X - RX</code></li>
-        <li><code>Back Right = Y + X - RX</code></li>
-      </ul>
-      <p><strong>Power Normalization:</strong> If combined inputs exceed 1.0 (e.g. 1.5), divide all four motor powers by the maximum absolute output to preserve steering ratios.</p>
-    </section>
+  <!-- Modal for Uploading / Adding New Guides -->
+  <div class="modal-overlay" id="uploadModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Upload / Add New Guide</h2>
+        <button class="btn-secondary" onclick="closeUploadModal()">✕</button>
+      </div>
+      <form id="guideForm" onsubmit="handleGuideUpload(event)">
+        <div class="form-group">
+          <label for="guideId">Guide ID (Unique, lowercase, e.g. 'autonomous-pid')</label>
+          <input type="text" id="guideId" required placeholder="autonomous-pid">
+        </div>
+        <div class="form-group">
+          <label for="guideTitle">Guide Title</label>
+          <input type="text" id="guideTitle" required placeholder="Autonomous PID Tuning Guide">
+        </div>
+        <div class="form-group">
+          <label for="step1Title">Step 1 Title</label>
+          <input type="text" id="step1Title" required placeholder="Setting Up Odometry Sensors">
+        </div>
+        <div class="form-group">
+          <label for="step1Content">Step 1 Content (HTML / Text)</label>
+          <textarea id="step1Content" required placeholder="Enter instructions or HTML content here..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="codeSnippet">Code Snippet (Optional)</label>
+          <textarea id="codeSnippet" placeholder="// Paste Java code snippet here..."></textarea>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button type="button" class="btn-secondary" onclick="exportJSON()">Export JSON Code</button>
+          <button type="submit">Save Guide to Browser</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-    <!-- Step 4 -->
-    <section id="step4" class="step-section">
-      <span class="step-badge">STEP 4</span>
-      <h2>Robot-Centric TeleOp Code & Line-by-Line Guide</h2>
-      <div class="code-container">
-        <button class="copy-btn" onclick="copyCode('code-step4')">Copy Java Code</button>
-        <pre id="code-step4">package org.firstinspires.ftc.teamcode;
+  <script>
+    // Initial Tutorial Data Array
+    const defaultGuides = [
+      {
+        id: "mecanum-onbotjava",
+        title: "Mecanum OnBotJava Guide",
+        steps: [
+          {
+            id: "step1",
+            badge: "STEP 1",
+            title: "Physical Wheel Mounting & Roller Configuration",
+            content: `<p>Verify physical installation before writing code. Mecanum wheels feature 45-degree angled rollers that generate lateral forces when rotated[cite: 3].</p>
+                      <ul>
+                        <li><strong>Top View ("X" Pattern):</strong> Looking from directly above, top rollers contacting the floor MUST form an "X" shape across the chassis[cite: 3].</li>
+                        <li><strong>Bottom View ("O" Pattern):</strong> Looking up from below, bottom rollers form an "O"[cite: 3]. If the top view forms an "O", swap left and right wheels immediately[cite: 3].</li>
+                      </ul>`
+          },
+          {
+            id: "step2",
+            badge: "STEP 2",
+            title: "Driver Station Hardware Configuration",
+            content: `<p>Open Driver Station > Settings > Configure Robot[cite: 3]. Map motor ports with exact string names[cite: 3]:</p>
+                      <table>
+                        <thead><tr><th>Wheel Position</th><th>OnBotJava Motor Name</th><th>Control Hub Port</th><th>Direction Setup</th></tr></thead>
+                        <tbody>
+                          <tr><td>Front Left</td><td><code>frontLeft</code></td><td>Port 0</td><td><code>REVERSE</code></td></tr>
+                          <tr><td>Back Left</td><td><code>backLeft</code></td><td>Port 1</td><td><code>REVERSE</code></td></tr>
+                          <tr><td>Front Right</td><td><code>frontRight</code></td><td>Port 2</td><td><code>FORWARD</code></td></tr>
+                          <tr><td>Back Right</td><td><code>backRight</code></td><td>Port 3</td><td><code>FORWARD</code></td></tr>
+                        </tbody>
+                      </table>`
+          },
+          {
+            id: "step4",
+            badge: "STEP 4",
+            title: "Robot-Centric TeleOp Code",
+            content: `<p>Copy and paste this starter Robot-Centric TeleOp code into OnBotJava[cite: 3]:</p>`,
+            code: `package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -249,96 +334,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "Mecanum Robot-Centric", group = "Linear OpMode")
 public class MecanumTeleOpRobotCentric extends LinearOpMode {
-
-    @Override
-    public void runOpMode() throws InterruptedException {
-        // Line A1: Fetch hardware objects from Driver Station configuration
-        DcMotor frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeft");
-        DcMotor backLeftMotor = hardwareMap.get(DcMotor.class, "backLeft");
-        DcMotor frontRightMotor = hardwareMap.get(DcMotor.class, "frontRight");
-        DcMotor backRightMotor = hardwareMap.get(DcMotor.class, "backRight");
-
-        // Line A2: Reverse left motors for forward drive alignment
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        // Line A3: Enable active BRAKE mode on zero power
-        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        waitForStart();
-
-        while (opModeIsActive()) {
-            // Line A4: Read gamepad sticks (Y is inverted natively by Android)
-            double y = -gamepad1.left_stick_y;
-            double x = gamepad1.left_stick_x * 1.1; // 1.1x friction multiplier
-            double rx = gamepad1.right_stick_x;
-
-            // Line A5: Compute raw kinematics power values
-            double frontLeftPower = y + x + rx;
-            double backLeftPower = y - x + rx;
-            double frontRightPower = y - x - rx;
-            double backRightPower = y + x - rx;
-
-            // Line A6: Proportional power normalization
-            double maxPower = Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower));
-            maxPower = Math.max(maxPower, Math.abs(frontRightPower));
-            maxPower = Math.max(maxPower, Math.abs(backRightPower));
-
-            if (maxPower > 1.0) {
-                frontLeftPower /= maxPower;
-                backLeftPower /= maxPower;
-                frontRightPower /= maxPower;
-                backRightPower /= maxPower;
-            }
-
-            // Line A7: Send power commands to motor controllers
-            frontLeftMotor.setPower(frontLeftPower);
-            backLeftMotor.setPower(backLeftPower);
-            frontRightMotor.setPower(frontRightPower);
-            backRightMotor.setPower(backRightPower);
-        }
-    }
-}</pre>
-      </div>
-      <table>
-        <thead>
-          <tr><th>Line Reference</th><th>Java Statement</th><th>Detailed Purpose & Action</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Line A1</td><td><code>hardwareMap.get(...)</code></td><td>Links code variable to physical motor port on REV hub.</td></tr>
-          <tr><td>Line A2</td><td><code>setDirection(REVERSE)</code></td><td>Flips left motor orientation so positive power moves forward.</td></tr>
-          <tr><td>Line A3</td><td><code>BRAKE mode</code></td><td>Resists rolling immediately when joysticks are released.</td></tr>
-          <tr><td>Line A4</td><td><code>-gamepad1.left_stick_y</code></td><td>Reverses Y-axis because pushing UP natively returns -1.0.</td></tr>
-          <tr><td>Line A6</td><td><code>power /= maxPower</code></td><td>Scales outputs down proportionally if any motor exceeds 1.0 power.</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- Step 5 -->
-    <section id="step5" class="step-section">
-      <span class="step-badge">STEP 5</span>
-      <h2>Field-Centric TeleOp & IMU Integration</h2>
-      <p>Uses the REV Control Hub gyro so pushing UP moves toward the far wall regardless of robot rotation.</p>
-      <div class="code-container">
-        <button class="copy-btn" onclick="copyCode('code-step5')">Copy Java Code</button>
-        <pre id="code-step5">package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.hardware.IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
-@TeleOp(name = "Mecanum Field-Centric", group = "Linear OpMode")
-public class MecanumTeleOpFieldCentric extends LinearOpMode {
-
     @Override
     public void runOpMode() throws InterruptedException {
         DcMotor frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeft");
@@ -349,49 +344,16 @@ public class MecanumTeleOpFieldCentric extends LinearOpMode {
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        // Line B1: Fetch and initialize REV Hub IMU orientation
-        IMU imu = hardwareMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
-        imu.initialize(parameters);
-
         waitForStart();
-
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y;
             double x = gamepad1.left_stick_x * 1.1;
             double rx = gamepad1.right_stick_x;
 
-            // Line B2: Reset heading zero reference when pressing Options/Start
-            if (gamepad1.options || gamepad1.start) {
-                imu.resetYaw();
-            }
-
-            // Line B3: Read robot heading angle in radians
-            double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-
-            // Line B4: Apply 2D inverse rotation matrix
-            double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
-            double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
-
-            // Line B5: Compute field-relative motor powers
-            double frontLeftPower = rotY + rotX + rx;
-            double backLeftPower = rotY - rotX + rx;
-            double frontRightPower = rotY - rotX - rx;
-            double backRightPower = rotY + rotX - rx;
-
-            // Power normalization
-            double maxPower = Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower));
-            maxPower = Math.max(maxPower, Math.abs(frontRightPower));
-            maxPower = Math.max(maxPower, Math.abs(backRightPower));
-
-            if (maxPower > 1.0) {
-                frontLeftPower /= maxPower;
-                backLeftPower /= maxPower;
-                frontRightPower /= maxPower;
-                backRightPower /= maxPower;
-            }
+            double frontLeftPower = y + x + rx;
+            double backLeftPower = y - x + rx;
+            double frontRightPower = y - x - rx;
+            double backRightPower = y + x - rx;
 
             frontLeftMotor.setPower(frontLeftPower);
             backLeftMotor.setPower(backLeftPower);
@@ -399,132 +361,156 @@ public class MecanumTeleOpFieldCentric extends LinearOpMode {
             backRightMotor.setPower(backRightPower);
         }
     }
-}</pre>
-      </div>
-    </section>
+}`
+          }
+        ]
+      },
+      {
+        id: "hardware-wiring",
+        title: "REV Control Hub Wiring & Setup",
+        steps: [
+          {
+            id: "hw-step1",
+            badge: "STEP 1",
+            title: "Power Distribution & Battery Connection",
+            content: `<p>Connect your 12V Slim Battery directly to the XT30 power port on the REV Control Hub.</p>
+                      <ul>
+                        <li>Use a 20A inline switch between the battery and the Hub.</li>
+                        <li>Ensure all wire crimps are tight and insulated with heat shrink.</li>
+                      </ul>`
+          }
+        ]
+      }
+    ];
 
-    <!-- Step 6 -->
-    <section id="step6" class="step-section">
-      <span class="step-badge">STEP 6</span>
-      <h2>Autonomous Encoder Driving Guide</h2>
-      <p>Convert distance in inches to motor encoder ticks using wheel diameter and gear ratios.</p>
-      <div class="code-container">
-        <button class="copy-btn" onclick="copyCode('code-step6')">Copy Java Code</button>
-        <pre id="code-step6">package org.firstinspires.ftc.teamcode;
+    // Load stored guides or fallback to defaults
+    let guides = JSON.parse(localStorage.getItem("ftc_guides")) || defaultGuides;
+    let activeGuideId = guides[0].id;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
-@Autonomous(name = "Mecanum Auto Encoder", group = "Linear OpMode")
-public class MecanumAutoEncoder extends LinearOpMode {
-
-    private DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
-    
-    // Ticks per revolution calculation for 537.7 ticks/rev motor & 96mm wheels
-    static final double COUNTS_PER_MOTOR_REV = 537.7;
-    static final double WHEEL_DIAMETER_INCHES = 3.77953;
-    static final double COUNTS_PER_INCH = COUNTS_PER_MOTOR_REV / (WHEEL_DIAMETER_INCHES * Math.PI);
-
-    @Override
-    public void runOpMode() throws InterruptedException {
-        frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeft");
-        backLeftMotor = hardwareMap.get(DcMotor.class, "backLeft");
-        frontRightMotor = hardwareMap.get(DcMotor.class, "frontRight");
-        backRightMotor = hardwareMap.get(DcMotor.class, "backRight");
-
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        waitForStart();
-
-        // Drive Forward 24 inches
-        encoderDrive(0.5, 24, 24, 24, 24, 4.0);
-        // Strafe Right 12 inches
-        encoderDrive(0.5, 12, -12, -12, 12, 3.0);
+    // Render Guide Selector Buttons
+    function renderGuideButtons() {
+      const selectorBar = document.getElementById("guideSelectorBar");
+      selectorBar.innerHTML = "";
+      guides.forEach(guide => {
+        const btn = document.createElement("button");
+        btn.className = `guide-btn ${guide.id === activeGuideId ? "active" : ""}`;
+        btn.innerText = guide.title;
+        btn.onclick = () => switchGuide(guide.id);
+        selectorBar.appendChild(btn);
+      });
     }
 
-    public void encoderDrive(double speed, double flInches, double blInches, double frInches, double brInches, double timeoutS) {
-        if (opModeIsActive()) {
-            int newFLTarget = frontLeftMotor.getCurrentPosition() + (int)(flInches * COUNTS_PER_INCH);
-            int newBLTarget = backLeftMotor.getCurrentPosition() + (int)(blInches * COUNTS_PER_INCH);
-            int newFRTarget = frontRightMotor.getCurrentPosition() + (int)(frInches * COUNTS_PER_INCH);
-            int newBRTarget = backRightMotor.getCurrentPosition() + (int)(brInches * COUNTS_PER_INCH);
+    // Switch Active Guide
+    function switchGuide(guideId) {
+      activeGuideId = guideId;
+      renderGuideButtons();
+      renderActiveGuide();
+    }
 
-            frontLeftMotor.setTargetPosition(newFLTarget);
-            backLeftMotor.setTargetPosition(newBLTarget);
-            frontRightMotor.setTargetPosition(newFRTarget);
-            backRightMotor.setTargetPosition(newBRTarget);
+    // Render Active Guide Content & Sidebar Index
+    function renderActiveGuide() {
+      const guide = guides.find(g => g.id === activeGuideId);
+      const sidebarIndex = document.getElementById("guideSidebarIndex");
+      const contentArea = document.getElementById("guideContent");
 
-            setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+      sidebarIndex.innerHTML = "";
+      contentArea.innerHTML = `<h1>${guide.title}</h1><br>`;
 
-            frontLeftMotor.setPower(Math.abs(speed));
-            backLeftMotor.setPower(Math.abs(speed));
-            frontRightMotor.setPower(Math.abs(speed));
-            backRightMotor.setPower(Math.abs(speed));
+      guide.steps.forEach(step => {
+        // Sidebar link
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="#${step.id}">${step.title}</a>`;
+        sidebarIndex.appendChild(li);
 
-            while (opModeIsActive() && (frontLeftMotor.isBusy() && backLeftMotor.isBusy() && frontRightMotor.isBusy() && backRightMotor.isBusy())) {
-                telemetry.addData("Target Pos", "FL:%d BL:%d FR:%d BR:%d", newFLTarget, newBLTarget, newFRTarget, newBRTarget);
-                telemetry.update();
-            }
+        // Content section
+        const section = document.createElement("section");
+        section.className = "step-section";
+        section.id = step.id;
 
-            frontLeftMotor.setPower(0);
-            backLeftMotor.setPower(0);
-            frontRightMotor.setPower(0);
-            backRightMotor.setPower(0);
-
-            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        let codeHTML = "";
+        if (step.code) {
+          codeHTML = `
+            <div class="code-container">
+              <button class="copy-btn" onclick="copyCode('${step.id}-code')">Copy Code</button>
+              <pre id="${step.id}-code">${escapeHTML(step.code)}</pre>
+            </div>`;
         }
+
+        section.innerHTML = `
+          <span class="step-badge">${step.badge || 'STEP'}</span>
+          <h2>${step.title}</h2>
+          ${step.content}
+          ${codeHTML}
+        `;
+        contentArea.appendChild(section);
+      });
     }
 
-    private void setRunMode(DcMotor.RunMode mode) {
-        frontLeftMotor.setMode(mode);
-        backLeftMotor.setMode(mode);
-        frontRightMotor.setMode(mode);
-        backRightMotor.setMode(mode);
+    // Modal Control
+    function openUploadModal() { document.getElementById("uploadModal").classList.add("active"); }
+    function closeUploadModal() { document.getElementById("uploadModal").classList.remove("active"); }
+
+    // Handle Adding New Guide
+    function handleGuideUpload(event) {
+      event.preventDefault();
+      const id = document.getElementById("guideId").value.trim();
+      const title = document.getElementById("guideTitle").value.trim();
+      const step1Title = document.getElementById("step1Title").value.trim();
+      const step1Content = document.getElementById("step1Content").value.trim();
+      const codeSnippet = document.getElementById("codeSnippet").value.trim();
+
+      const newGuide = {
+        id: id,
+        title: title,
+        steps: [
+          {
+            id: `${id}-step1`,
+            badge: "STEP 1",
+            title: step1Title,
+            content: `<p>${step1Content}</p>`,
+            code: codeSnippet || undefined
+          }
+        ]
+      };
+
+      guides.push(newGuide);
+      localStorage.setItem("ftc_guides", JSON.stringify(guides));
+      closeUploadModal();
+      switchGuide(id);
+      document.getElementById("guideForm").reset();
     }
-}</pre>
-      </div>
-    </section>
 
-    <!-- Step 7 -->
-    <section id="step7" class="step-section">
-      <span class="step-badge">STEP 7</span>
-      <h2>Testing & Troubleshooting Guide</h2>
-      <table>
-        <thead>
-          <tr><th>Symptom</th><th>Underlying Cause</th><th>Step-by-Step Fix</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Robot spins when trying to strafe</td><td>Incorrect wheel placement or inverted motor sign.</td><td>Verify top rollers form an "X" pattern and set left motors to REVERSE.</td></tr>
-          <tr><td>Strafing direction is reversed</td><td>Inverted X vector sign.</td><td>In TeleOp code, change <code>left_stick_x</code> to <code>-left_stick_x</code>.</td></tr>
-          <tr><td>Robot drifts diagonally when driving straight</td><td>Uneven center of mass or roller friction variance.</td><td>Rebalance weight distribution or implement IMU heading PID stabilization.</td></tr>
-          <tr><td>Motors coast after releasing sticks</td><td>Motors left on default float mode.</td><td>Set <code>setZeroPowerBehavior(BRAKE)</code> for all four motors.</td></tr>
-        </tbody>
-      </table>
-    </section>
-  </main>
+    // Export Guides Array as JSON so users can commit directly to repository
+    function exportJSON() {
+      const jsonStr = JSON.stringify(guides, null, 2);
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        alert("Full guides JSON copied to clipboard! You can paste this directly into your codebase or data file.");
+      });
+    }
 
-  <script>
+    // Copy Code Utility
+    function copyCode(elementId) {
+      const codeText = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(codeText).then(() => alert("Code copied to clipboard!"));
+    }
+
+    // Utility to escape HTML strings in pre blocks
+    function escapeHTML(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    // Theme Toggle
     function toggleTheme() {
-      const currentTheme = document.body.getAttribute('data-theme');
-      if (currentTheme === 'light') {
+      if (document.body.getAttribute('data-theme') === 'light') {
         document.body.removeAttribute('data-theme');
       } else {
         document.body.setAttribute('data-theme', 'light');
       }
     }
 
-    function copyCode(elementId) {
-      const codeText = document.getElementById(elementId).innerText;
-      navigator.clipboard.writeText(codeText).then(() => {
-        alert('Java Code Copied to Clipboard!');
-      });
-    }
+    // Initialize App
+    renderGuideButtons();
+    renderActiveGuide();
   </script>
 </body>
 </html>
