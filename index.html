@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FTC Robotics Tutorial Hub | Mecanum Drive Guide</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --code-bg: #090d16;
+      --table-header: #0284c7;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --accent: #0284c7;
+      --accent-hover: #0369a1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #e2e8f0;
+      --code-bg: #1e293b;
+      --table-header: #0284c7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    aside {
+      width: 280px;
+      background-color: var(--card-bg);
+      border-right: 1px solid var(--border-color);
+      padding: 24px 16px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    aside h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: 16px; }
+    aside ul { list-style: none; }
+    aside li { margin-bottom: 8px; }
+    aside a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: block;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    aside a:hover, aside a.active {
+      background-color: var(--accent);
+      color: #ffffff;
+    }
+
+    /* Main Content Area */
+    main {
+      margin-left: 280px;
+      flex: 1;
+      padding: 40px;
+      max-width: 1000px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+      margin-bottom: 32px;
+    }
+    header h1 { font-size: 1.8rem; }
+    .theme-toggle {
+      background: var(--border-color);
+      color: var(--text-main);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Content Cards & Sections */
+    .step-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    .step-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    h2 { font-size: 1.4rem; margin-bottom: 12px; }
+    p, li { color: var(--text-muted); font-size: 0.98rem; margin-bottom: 12px; }
+    ul, ol { padding-left: 20px; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      text-align: left;
+    }
+    th { background-color: var(--table-header); color: #fff; }
+
+    /* Code Block Containers */
+    .code-container {
+      position: relative;
+      margin: 16px 0;
+    }
+    pre {
+      background: var(--code-bg);
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      aside { width: 100%; height: auto; position: relative; }
+      main { margin-left: 0; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar Navigation -->
+  <aside>
+    <h2>FTC Team Tutorials</h2>
+    <ul>
+      <li><a href="#step1" class="active">1. Physical Wheel Setup</a></li>
+      <li><a href="#step2">2. Hardware Configuration</a></li>
+      <li><a href="#step3">3. Mecanum Kinematics Math</a></li>
+      <li><a href="#step4">4. Robot-Centric TeleOp</a></li>
+      <li><a href="#step5">5. Field-Centric IMU TeleOp</a></li>
+      <li><a href="#step6">6. Autonomous Encoder Drive</a></li>
+      <li><a href="#step7">7. Testing & Troubleshooting</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main>
+    <header>
+      <h1>Mecanum Wheel OnBotJava Guide</h1>
+      <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light</button>
+    </header>
+
+    <!-- Step 1 -->
+    <section id="step1" class="step-section">
+      <span class="step-badge">STEP 1</span>
+      <h2>Physical Wheel Mounting & Roller Configuration</h2>
+      <p>Verify physical installation before writing code. Mecanum wheels feature 45-degree angled rollers that generate lateral forces when rotated.</p>
+      <ul>
+        <li><strong>Top View ("X" Pattern):</strong> Looking from directly above, the top rollers contacting the carpet MUST form an "X" shape across the chassis.</li>
+        <li><strong>Bottom View ("O" Pattern):</strong> Looking up from under the robot, bottom rollers form an "O". If the top view forms an "O", swap left and right wheels immediately.</li>
+      </ul>
+    </section>
+
+    <!-- Step 2 -->
+    <section id="step2" class="step-section">
+      <span class="step-badge">STEP 2</span>
+      <h2>Driver Station Hardware Configuration</h2>
+      <p>Open Driver Station > Settings > Configure Robot. Map motor ports with exact string names:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Wheel Position</th>
+            <th>OnBotJava Motor Name</th>
+            <th>Control Hub Port</th>
+            <th>Direction Setup</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Front Left</td><td><code>frontLeft</code></td><td>Port 0</td><td><code>REVERSE</code></td></tr>
+          <tr><td>Back Left</td><td><code>backLeft</code></td><td>Port 1</td><td><code>REVERSE</code></td></tr>
+          <tr><td>Front Right</td><td><code>frontRight</code></td><td>Port 2</td><td><code>FORWARD</code></td></tr>
+          <tr><td>Back Right</td><td><code>backRight</code></td><td>Port 3</td><td><code>FORWARD</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Step 3 -->
+    <section id="step3" class="step-section">
+      <span class="step-badge">STEP 3</span>
+      <h2>Kinematics Equations & Power Normalization</h2>
+      <p>Wheel powers combine axial vector (Y), lateral vector (X), and rotational vector (RX):</p>
+      <ul>
+        <li><code>Front Left = Y + X + RX</code></li>
+        <li><code>Back Left = Y - X + RX</code></li>
+        <li><code>Front Right = Y - X - RX</code></li>
+        <li><code>Back Right = Y + X - RX</code></li>
+      </ul>
+      <p><strong>Power Normalization:</strong> If combined inputs exceed 1.0 (e.g. 1.5), divide all four motor powers by the maximum absolute output to preserve steering ratios.</p>
+    </section>
+
+    <!-- Step 4 -->
+    <section id="step4" class="step-section">
+      <span class="step-badge">STEP 4</span>
+      <h2>Robot-Centric TeleOp Code & Line-by-Line Guide</h2>
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('code-step4')">Copy Java Code</button>
+        <pre id="code-step4">package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+@TeleOp(name = "Mecanum Robot-Centric", group = "Linear OpMode")
+public class MecanumTeleOpRobotCentric extends LinearOpMode {
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+        // Line A1: Fetch hardware objects from Driver Station configuration
+        DcMotor frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeft");
+        DcMotor backLeftMotor = hardwareMap.get(DcMotor.class, "backLeft");
+        DcMotor frontRightMotor = hardwareMap.get(DcMotor.class, "frontRight");
+        DcMotor backRightMotor = hardwareMap.get(DcMotor.class, "backRight");
+
+        // Line A2: Reverse left motors for forward drive alignment
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        // Line A3: Enable active BRAKE mode on zero power
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        waitForStart();
+
+        while (opModeIsActive()) {
+            // Line A4: Read gamepad sticks (Y is inverted natively by Android)
+            double y = -gamepad1.left_stick_y;
+            double x = gamepad1.left_stick_x * 1.1; // 1.1x friction multiplier
+            double rx = gamepad1.right_stick_x;
+
+            // Line A5: Compute raw kinematics power values
+            double frontLeftPower = y + x + rx;
+            double backLeftPower = y - x + rx;
+            double frontRightPower = y - x - rx;
+            double backRightPower = y + x - rx;
+
+            // Line A6: Proportional power normalization
+            double maxPower = Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower));
+            maxPower = Math.max(maxPower, Math.abs(frontRightPower));
+            maxPower = Math.max(maxPower, Math.abs(backRightPower));
+
+            if (maxPower > 1.0) {
+                frontLeftPower /= maxPower;
+                backLeftPower /= maxPower;
+                frontRightPower /= maxPower;
+                backRightPower /= maxPower;
+            }
+
+            // Line A7: Send power commands to motor controllers
+            frontLeftMotor.setPower(frontLeftPower);
+            backLeftMotor.setPower(backLeftPower);
+            frontRightMotor.setPower(frontRightPower);
+            backRightMotor.setPower(backRightPower);
+        }
+    }
+}</pre>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Line Reference</th><th>Java Statement</th><th>Detailed Purpose & Action</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Line A1</td><td><code>hardwareMap.get(...)</code></td><td>Links code variable to physical motor port on REV hub.</td></tr>
+          <tr><td>Line A2</td><td><code>setDirection(REVERSE)</code></td><td>Flips left motor orientation so positive power moves forward.</td></tr>
+          <tr><td>Line A3</td><td><code>BRAKE mode</code></td><td>Resists rolling immediately when joysticks are released.</td></tr>
+          <tr><td>Line A4</td><td><code>-gamepad1.left_stick_y</code></td><td>Reverses Y-axis because pushing UP natively returns -1.0.</td></tr>
+          <tr><td>Line A6</td><td><code>power /= maxPower</code></td><td>Scales outputs down proportionally if any motor exceeds 1.0 power.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Step 5 -->
+    <section id="step5" class="step-section">
+      <span class="step-badge">STEP 5</span>
+      <h2>Field-Centric TeleOp & IMU Integration</h2>
+      <p>Uses the REV Control Hub gyro so pushing UP moves toward the far wall regardless of robot rotation.</p>
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('code-step5')">Copy Java Code</button>
+        <pre id="code-step5">package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.IMU;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
+@TeleOp(name = "Mecanum Field-Centric", group = "Linear OpMode")
+public class MecanumTeleOpFieldCentric extends LinearOpMode {
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+        DcMotor frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeft");
+        DcMotor backLeftMotor = hardwareMap.get(DcMotor.class, "backLeft");
+        DcMotor frontRightMotor = hardwareMap.get(DcMotor.class, "frontRight");
+        DcMotor backRightMotor = hardwareMap.get(DcMotor.class, "backRight");
+
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        // Line B1: Fetch and initialize REV Hub IMU orientation
+        IMU imu = hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+        imu.initialize(parameters);
+
+        waitForStart();
+
+        while (opModeIsActive()) {
+            double y = -gamepad1.left_stick_y;
+            double x = gamepad1.left_stick_x * 1.1;
+            double rx = gamepad1.right_stick_x;
+
+            // Line B2: Reset heading zero reference when pressing Options/Start
+            if (gamepad1.options || gamepad1.start) {
+                imu.resetYaw();
+            }
+
+            // Line B3: Read robot heading angle in radians
+            double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+
+            // Line B4: Apply 2D inverse rotation matrix
+            double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
+            double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
+
+            // Line B5: Compute field-relative motor powers
+            double frontLeftPower = rotY + rotX + rx;
+            double backLeftPower = rotY - rotX + rx;
+            double frontRightPower = rotY - rotX - rx;
+            double backRightPower = rotY + rotX - rx;
+
+            // Power normalization
+            double maxPower = Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower));
+            maxPower = Math.max(maxPower, Math.abs(frontRightPower));
+            maxPower = Math.max(maxPower, Math.abs(backRightPower));
+
+            if (maxPower > 1.0) {
+                frontLeftPower /= maxPower;
+                backLeftPower /= maxPower;
+                frontRightPower /= maxPower;
+                backRightPower /= maxPower;
+            }
+
+            frontLeftMotor.setPower(frontLeftPower);
+            backLeftMotor.setPower(backLeftPower);
+            frontRightMotor.setPower(frontRightPower);
+            backRightMotor.setPower(backRightPower);
+        }
+    }
+}</pre>
+      </div>
+    </section>
+
+    <!-- Step 6 -->
+    <section id="step6" class="step-section">
+      <span class="step-badge">STEP 6</span>
+      <h2>Autonomous Encoder Driving Guide</h2>
+      <p>Convert distance in inches to motor encoder ticks using wheel diameter and gear ratios.</p>
+      <div class="code-container">
+        <button class="copy-btn" onclick="copyCode('code-step6')">Copy Java Code</button>
+        <pre id="code-step6">package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+@Autonomous(name = "Mecanum Auto Encoder", group = "Linear OpMode")
+public class MecanumAutoEncoder extends LinearOpMode {
+
+    private DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
+    
+    // Ticks per revolution calculation for 537.7 ticks/rev motor & 96mm wheels
+    static final double COUNTS_PER_MOTOR_REV = 537.7;
+    static final double WHEEL_DIAMETER_INCHES = 3.77953;
+    static final double COUNTS_PER_INCH = COUNTS_PER_MOTOR_REV / (WHEEL_DIAMETER_INCHES * Math.PI);
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+        frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeft");
+        backLeftMotor = hardwareMap.get(DcMotor.class, "backLeft");
+        frontRightMotor = hardwareMap.get(DcMotor.class, "frontRight");
+        backRightMotor = hardwareMap.get(DcMotor.class, "backRight");
+
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        setRunMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        waitForStart();
+
+        // Drive Forward 24 inches
+        encoderDrive(0.5, 24, 24, 24, 24, 4.0);
+        // Strafe Right 12 inches
+        encoderDrive(0.5, 12, -12, -12, 12, 3.0);
+    }
+
+    public void encoderDrive(double speed, double flInches, double blInches, double frInches, double brInches, double timeoutS) {
+        if (opModeIsActive()) {
+            int newFLTarget = frontLeftMotor.getCurrentPosition() + (int)(flInches * COUNTS_PER_INCH);
+            int newBLTarget = backLeftMotor.getCurrentPosition() + (int)(blInches * COUNTS_PER_INCH);
+            int newFRTarget = frontRightMotor.getCurrentPosition() + (int)(frInches * COUNTS_PER_INCH);
+            int newBRTarget = backRightMotor.getCurrentPosition() + (int)(brInches * COUNTS_PER_INCH);
+
+            frontLeftMotor.setTargetPosition(newFLTarget);
+            backLeftMotor.setTargetPosition(newBLTarget);
+            frontRightMotor.setTargetPosition(newFRTarget);
+            backRightMotor.setTargetPosition(newBRTarget);
+
+            setRunMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            frontLeftMotor.setPower(Math.abs(speed));
+            backLeftMotor.setPower(Math.abs(speed));
+            frontRightMotor.setPower(Math.abs(speed));
+            backRightMotor.setPower(Math.abs(speed));
+
+            while (opModeIsActive() && (frontLeftMotor.isBusy() && backLeftMotor.isBusy() && frontRightMotor.isBusy() && backRightMotor.isBusy())) {
+                telemetry.addData("Target Pos", "FL:%d BL:%d FR:%d BR:%d", newFLTarget, newBLTarget, newFRTarget, newBRTarget);
+                telemetry.update();
+            }
+
+            frontLeftMotor.setPower(0);
+            backLeftMotor.setPower(0);
+            frontRightMotor.setPower(0);
+            backRightMotor.setPower(0);
+
+            setRunMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+    }
+
+    private void setRunMode(DcMotor.RunMode mode) {
+        frontLeftMotor.setMode(mode);
+        backLeftMotor.setMode(mode);
+        frontRightMotor.setMode(mode);
+        backRightMotor.setMode(mode);
+    }
+}</pre>
+      </div>
+    </section>
+
+    <!-- Step 7 -->
+    <section id="step7" class="step-section">
+      <span class="step-badge">STEP 7</span>
+      <h2>Testing & Troubleshooting Guide</h2>
+      <table>
+        <thead>
+          <tr><th>Symptom</th><th>Underlying Cause</th><th>Step-by-Step Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Robot spins when trying to strafe</td><td>Incorrect wheel placement or inverted motor sign.</td><td>Verify top rollers form an "X" pattern and set left motors to REVERSE.</td></tr>
+          <tr><td>Strafing direction is reversed</td><td>Inverted X vector sign.</td><td>In TeleOp code, change <code>left_stick_x</code> to <code>-left_stick_x</code>.</td></tr>
+          <tr><td>Robot drifts diagonally when driving straight</td><td>Uneven center of mass or roller friction variance.</td><td>Rebalance weight distribution or implement IMU heading PID stabilization.</td></tr>
+          <tr><td>Motors coast after releasing sticks</td><td>Motors left on default float mode.</td><td>Set <code>setZeroPowerBehavior(BRAKE)</code> for all four motors.</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    function toggleTheme() {
+      const currentTheme = document.body.getAttribute('data-theme');
+      if (currentTheme === 'light') {
+        document.body.removeAttribute('data-theme');
+      } else {
+        document.body.setAttribute('data-theme', 'light');
+      }
+    }
+
+    function copyCode(elementId) {
+      const codeText = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(codeText).then(() => {
+        alert('Java Code Copied to Clipboard!');
+      });
+    }
+  </script>
+</body>
+</html>
